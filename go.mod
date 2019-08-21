@@ -1,4 +1,4 @@
-module logur.dev/adapter/template
+module logur.dev/adapter/zerolog
 
 go 1.12
 

@@ -1,11 +1,11 @@
-// Package template provides a Logur adapter for TEMPLATE.
-package template
+// Package zerolog provides a Logur adapter for zerolog.
+package zerolog
 
 import (
 	"github.com/goph/logur"
 )
 
-// Logger is a Logur adapter for TEMPLATE.
+// Logger is a Logur adapter for zerolog.
 type Logger struct {
 }
 
