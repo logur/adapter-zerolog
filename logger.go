@@ -2,62 +2,67 @@
 package zerolog
 
 import (
-	"github.com/goph/logur"
+	"github.com/rs/zerolog"
 )
 
 // Logger is a Logur adapter for zerolog.
 type Logger struct {
+	logger zerolog.Logger
 }
 
 // New returns a new Logur logger.
-// If logger is nil, a default instance is created.
-func New(logger interface{}) *Logger {
-	if logger == nil {
-		return &Logger{}
+func New(logger zerolog.Logger) *Logger {
+	return &Logger{
+		logger: logger,
 	}
-
-	return &Logger{}
 }
 
 // Trace implements the Logur Logger interface.
 func (l *Logger) Trace(msg string, fields ...map[string]interface{}) {
-
+	// Fall back to Debug
+	l.Debug(msg, fields...)
 }
 
 // Debug implements the Logur Logger interface.
 func (l *Logger) Debug(msg string, fields ...map[string]interface{}) {
+	event := l.logger.Debug()
 
+	if len(fields) > 0 {
+		event.Fields(fields[0])
+	}
+
+	event.Msg(msg)
 }
 
 // Info implements the Logur Logger interface.
 func (l *Logger) Info(msg string, fields ...map[string]interface{}) {
+	event := l.logger.Info()
 
+	if len(fields) > 0 {
+		event.Fields(fields[0])
+	}
+
+	event.Msg(msg)
 }
 
 // Warn implements the Logur Logger interface.
 func (l *Logger) Warn(msg string, fields ...map[string]interface{}) {
+	event := l.logger.Warn()
 
+	if len(fields) > 0 {
+		event.Fields(fields[0])
+	}
+
+	event.Msg(msg)
 }
 
 // Error implements the Logur Logger interface.
 func (l *Logger) Error(msg string, fields ...map[string]interface{}) {
+	event := l.logger.Error()
 
-}
-
-// LevelEnabled implements the Logur LevelEnabler interface.
-func (l *Logger) LevelEnabled(level logur.Level) bool {
-	switch level {
-	case logur.Trace:
-		return true
-	case logur.Debug:
-		return true
-	case logur.Info:
-		return true
-	case logur.Warn:
-		return true
-	case logur.Error:
-		return true
+	if len(fields) > 0 {
+		event.Fields(fields[0])
 	}
 
-	return true
+	event.Msg(msg)
 }

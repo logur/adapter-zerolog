@@ -21,11 +21,12 @@ go get logur.dev/adapter/zerolog
 package main
 
 import (
+	"github.com/rs/zerolog"
 	zerologadapter "logur.dev/adapter/zerolog"
 )
 
 func main() {
-	logger := zerologadapter.New(/*logger*/)
+	logger := zerologadapter.New(zerolog.Nop())
 }
 ```
 
