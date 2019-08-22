@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/goph/logur"
-	"github.com/goph/logur/logtesting"
 	"github.com/rs/zerolog"
+	"logur.dev/logur"
+	"logur.dev/logur/logtesting"
 )
 
 func newTestSuite() *logtesting.LoggerTestSuite {
