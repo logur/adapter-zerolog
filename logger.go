@@ -2,6 +2,8 @@
 package zerolog
 
 import (
+	"context"
+
 	"github.com/rs/zerolog"
 )
 
@@ -65,4 +67,24 @@ func (l *Logger) Error(msg string, fields ...map[string]interface{}) {
 	}
 
 	event.Msg(msg)
+}
+
+func (l *Logger) TraceContext(_ context.Context, msg string, fields ...map[string]interface{}) {
+	l.Trace(msg, fields...)
+}
+
+func (l *Logger) DebugContext(_ context.Context, msg string, fields ...map[string]interface{}) {
+	l.Debug(msg, fields...)
+}
+
+func (l *Logger) InfoContext(_ context.Context, msg string, fields ...map[string]interface{}) {
+	l.Info(msg, fields...)
+}
+
+func (l *Logger) WarnContext(_ context.Context, msg string, fields ...map[string]interface{}) {
+	l.Warn(msg, fields...)
+}
+
+func (l *Logger) ErrorContext(_ context.Context, msg string, fields ...map[string]interface{}) {
+	l.Error(msg, fields...)
 }

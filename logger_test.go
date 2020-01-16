@@ -8,17 +8,17 @@ import (
 
 	"github.com/rs/zerolog"
 	"logur.dev/logur"
-	"logur.dev/logur/logtesting"
+	"logur.dev/logur/conformance"
 )
 
-func newTestSuite() *logtesting.LoggerTestSuite {
-	return &logtesting.LoggerTestSuite{
-		TraceFallbackToDebug: true,
-		LoggerFactory: func(level logur.Level) (logur.Logger, func() []logur.LogEvent) {
+func TestLogger(t *testing.T) {
+	suite := conformance.TestSuite{
+		NoTraceLevel: true,
+		LoggerFactory: func(level logur.Level) (logur.Logger, conformance.TestLogger) {
 			var buf bytes.Buffer
 			logger := zerolog.New(&buf).Level(zerolog.Level(level))
 
-			return New(logger), func() []logur.LogEvent {
+			return New(logger), conformance.TestLoggerFunc(func() []logur.LogEvent {
 				lines := strings.Split(strings.TrimSuffix(buf.String(), "\n"), "\n")
 
 				events := make([]logur.LogEvent, len(lines))
@@ -45,11 +45,9 @@ func newTestSuite() *logtesting.LoggerTestSuite {
 				}
 
 				return events
-			}
+			})
 		},
 	}
-}
 
-func TestLoggerSuite(t *testing.T) {
-	newTestSuite().Execute(t)
+	suite.Run(t)
 }
