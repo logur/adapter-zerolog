@@ -13,10 +13,9 @@ import (
 
 func TestLogger(t *testing.T) {
 	suite := conformance.TestSuite{
-		NoTraceLevel: true,
 		LoggerFactory: func(level logur.Level) (logur.Logger, conformance.TestLogger) {
 			var buf bytes.Buffer
-			logger := zerolog.New(&buf).Level(zerolog.Level(level))
+			logger := zerolog.New(&buf).Level(zerolog.Level(level - 1))
 
 			return New(logger), conformance.TestLoggerFunc(func() []logur.LogEvent {
 				lines := strings.Split(strings.TrimSuffix(buf.String(), "\n"), "\n")

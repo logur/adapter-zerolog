@@ -21,8 +21,13 @@ func New(logger zerolog.Logger) *Logger {
 
 // Trace implements the Logur Logger interface.
 func (l *Logger) Trace(msg string, fields ...map[string]interface{}) {
-	// Fall back to Debug
-	l.Debug(msg, fields...)
+	event := l.logger.Trace()
+
+	if len(fields) > 0 {
+		event.Fields(fields[0])
+	}
+
+	event.Msg(msg)
 }
 
 // Debug implements the Logur Logger interface.
